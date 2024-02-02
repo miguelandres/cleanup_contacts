@@ -1,0 +1,28 @@
+*.DS_Store
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# hidden
+.npm
+.env
+.nyc_output
+*.lock
+
+# Dependency directories
+node_modules/
+
+# Editor
+.idea/
+
+# Build directory
+dist/
+
+build
+coverage
+node_modules
+tmp
+.clasprc.json
