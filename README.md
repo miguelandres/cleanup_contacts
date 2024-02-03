@@ -1,6 +1,13 @@
-# Birthday reminder script
+# Contact cleaner
 
 [![clasp](https://img.shields.io/badge/built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
+
+My contacts have lived for a long time on Google, they have accumulated cruft
+that is no longer necessary or useful at all, for example IM usernames, which
+we generally no longer use or Google+ Profile links that no longer exist.
+
+This script provides a framework to clean up stuff like that, or maybe even
+do phone number migrations.
 
 ## Development
 
