@@ -23,5 +23,18 @@
 function isEmailToDelete(email: GoogleAppsScript.People.Schema.EmailAddress): boolean {
   return email.value == undefined ||
     email.value?.length == 0 ||
-    email.value?.endsWith("@google.com")
+    email.value?.endsWith("@google.com") ||
+    email.value?.endsWith("@uniandes.edu.co")
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function generateReportOfEmailsToDelete() {
+  const filteredContacts = getAllFilteredContacts((person) =>
+    (person.emailAddresses?.filter(isEmailToDelete) ?? []).length > 0
+  )
+
+  filteredContacts.forEach((person) => {
+    const emailsToDelete = person.emailAddresses?.filter(isEmailToDelete).map((email) => email.value!)
+    console.log(`${person.names?.at(0)?.displayName} has the following emails to delete: ${emailsToDelete}`)
+  })
 }

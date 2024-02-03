@@ -51,7 +51,7 @@ function personDetailsToString(person: GoogleAppsScript.People.Schema.Person): s
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function main() {
+function runAllCleanups() {
   const contacts = getAllFilteredContacts(contactFilter)
   contacts.forEach((person) => {
     console.log(`Removing the following details from ${personDetailsToString(person)}`)

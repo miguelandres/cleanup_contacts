@@ -56,7 +56,7 @@ function getPhonesToDelete(phones?: GoogleAppsScript.People.Schema.PhoneNumber[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function generateContactsWithPhonesInLocalFormat() {
+function generateReportOfContactsWithPhonesInLocalFormat() {
   const filteredContacts = getAllFilteredContacts((person) =>
     (getCanonicalPhones(person.phoneNumbers)?.filter((number) => !number.startsWith("+"))?.length ?? 0) > 0
   )
