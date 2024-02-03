@@ -71,7 +71,7 @@ function main() {
         "updatePersonFields": "imClients,urls,phoneNumbers,emailAddresses"
       }
     )
-    console.log("Done updating, waiting 1000ms.")
-    Utilities.sleep(1000)
+    console.log("Done updating, waiting 100ms.")
+    Utilities.sleep(100)
   })
 }
