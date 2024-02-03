@@ -19,31 +19,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getAllContacts(personFields: string = 'names,imClients,urls,phoneNumbers,emailAddresses'): GoogleAppsScript.People.Schema.Person[] {
-  let nextPageToken: string | undefined = undefined
-  let allPeople: GoogleAppsScript.People.Schema.Person[] = []
-  do {
-    const query = {
-      pageToken: nextPageToken,
-      pageSize: 500,
-      personFields: personFields
-    }
-    const response = People.People!.Connections!.list(
-      'people/me',
-      query)
-    nextPageToken = response.nextPageToken
-    allPeople = allPeople.concat(response.connections!)
-  } while (nextPageToken != undefined)
-  console.log(`found ${allPeople.length} contacts`)
-  return allPeople
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getAllFilteredContacts(filterFn: (person: GoogleAppsScript.People.Schema.Person) => boolean): GoogleAppsScript.People.Schema.Person[] {
-  const filteredContacts = getAllContacts()
-    .filter(filterFn)
-  console.log(`found ${filteredContacts.length} people that pass the filter`)
-  return filteredContacts
+function isEmailToDelete(email: GoogleAppsScript.People.Schema.EmailAddress): boolean {
+  return email.value == undefined ||
+    email.value?.length == 0 ||
+    email.value?.endsWith("@google.com")
 }

@@ -22,6 +22,8 @@
 function contactFilter(person: GoogleAppsScript.People.Schema.Person): boolean {
   const hasUrlToDelete = person.urls?.find(isUrlToDelete) != undefined
   if (hasUrlToDelete) return true
+  const hasEmailToDelete = person.emailAddresses?.find(isEmailToDelete) != undefined
+  if (hasEmailToDelete) return true
   const hasIm = person.imClients != undefined
   if (hasIm) return true
   const phonesToDelete = getPhonesToDelete(person.phoneNumbers)
@@ -30,34 +32,32 @@ function contactFilter(person: GoogleAppsScript.People.Schema.Person): boolean {
   return hasPhonesToDelete
 }
 
-function getAllFilteredContacts(): GoogleAppsScript.People.Schema.Person[] {
-  const filteredContacts = getAllContacts()
-    .filter(contactFilter)
-  console.log(`found ${filteredContacts.length} people that pass the filter`)
-  return filteredContacts
-}
-
 
 function personDetailsToString(person: GoogleAppsScript.People.Schema.Person): string {
   let phonesToDelete = getPhonesToDelete(person.phoneNumbers)
   phonesToDelete = phonesToDelete != undefined && phonesToDelete.length > 0 ? phonesToDelete : undefined
   let urlsToDelete = person.urls?.filter(isUrlToDelete).map((url) => url.value)
   urlsToDelete = urlsToDelete != undefined && urlsToDelete.length > 0 ? urlsToDelete : undefined
+
+  let emailsToDelete = person.emailAddresses?.filter(isEmailToDelete).map((email) => email.value)
+  emailsToDelete = emailsToDelete != undefined && emailsToDelete.length > 0 ? emailsToDelete : undefined
   return [
     `${person.names?.at(0)?.displayName}`,
     person.imClients?.map((im) => `${im.protocol}: ${im.username}`).join(", "),
     phonesToDelete != undefined ? `Phones to delete: ${phonesToDelete.join(", ")}` : undefined,
-    urlsToDelete != undefined ? `Urls to delete: ${urlsToDelete.join(", ")}` : undefined
+    urlsToDelete != undefined ? `Urls to delete: ${urlsToDelete.join(", ")}` : undefined,
+    emailsToDelete != undefined ? `Emails to delete: ${emailsToDelete.join(", ")}` : undefined
   ].filter((str): str is string => !(str == null)).join("\n")
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function main() {
-  const contacts = getAllFilteredContacts()
+  const contacts = getAllFilteredContacts(contactFilter)
   contacts.forEach((person) => {
     console.log(`Removing the following details from ${personDetailsToString(person)}`)
     person.imClients = undefined
     person.urls = person.urls?.filter((url) => !isUrlToDelete(url))
+    person.emailAddresses = person.emailAddresses?.filter((email) => !isEmailToDelete(email))
     const phonesToDelete = getPhonesToDelete(person.phoneNumbers)
     person.phoneNumbers = person.phoneNumbers
       ?.filter((phone) =>
@@ -68,7 +68,7 @@ function main() {
       person,
       person.resourceName!,
       {
-        "updatePersonFields": "imClients,urls,phoneNumbers"
+        "updatePersonFields": "imClients,urls,phoneNumbers,emailAddresses"
       }
     )
     console.log("Done updating, waiting 1000ms.")
