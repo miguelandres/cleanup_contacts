@@ -54,3 +54,15 @@ function getPhonesToDelete(phones?: GoogleAppsScript.People.Schema.PhoneNumber[]
   return canonicalPhones?.filter((phone) =>
     isPhoneWithoutPrefixInSameContact(phone, canonicalPhones))
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function generateContactsWithPhonesInLocalFormat() {
+  const filteredContacts = getAllFilteredContacts((person) =>
+    (getCanonicalPhones(person.phoneNumbers)?.filter((number) => !number.startsWith("+"))?.length ?? 0) > 0
+  )
+
+  filteredContacts.forEach((person) => {
+    const phoneString = getCanonicalPhones(person.phoneNumbers)!.filter((number) => !number.startsWith("+")).join(", ")
+    console.log(`${person.names?.at(0)?.displayName} has the following non international numbers: ${phoneString}`)
+  })
+}
