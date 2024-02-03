@@ -31,6 +31,8 @@ function isPhoneWithoutPrefixInSameContact(
         otherPhone.endsWith(canonicalPhone) ||
         // Argentinian number that hasn't been fixed
         (canonicalPhone.startsWith("+5411") && otherPhone.startsWith("+54911") && otherPhone.endsWith(canonicalPhone.slice(5))) ||
+        // Brazilian International Format without the extra 9
+        (canonicalPhone.startsWith("+55") && canonicalPhone.length == 13 && otherPhone.startsWith(canonicalPhone.slice(0, 5)) && otherPhone.endsWith(canonicalPhone.slice(5))) ||
         // Old colombian international format for landlines
         (canonicalPhone.startsWith("+57") && canonicalPhone.length == 11 && otherPhone.startsWith("+5760") && otherPhone.endsWith(canonicalPhone.slice(3))) ||
         // Old colombian local format for landlines
