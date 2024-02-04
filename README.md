@@ -27,6 +27,7 @@ npm install --save @types/google-apps-script
 npm install @typescript-eslint/eslint-plugin@latest --save-dev
 npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin
 npm install --save-dev eslint-config-prettier
+npm i -D @stylistic/eslint-plugin
 npm install eslint
 ```
 

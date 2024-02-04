@@ -29,7 +29,8 @@
 function contactFilter(person: GoogleAppsScript.People.Schema.Person): boolean {
   const hasUrlToDelete = person.urls?.find(isUrlToDelete) != undefined
   if (hasUrlToDelete) return true
-  const hasEmailToDelete = person.emailAddresses?.find(isEmailToDelete) != undefined
+  const hasEmailToDelete =
+    person.emailAddresses?.find(isEmailToDelete) != undefined
   if (hasEmailToDelete) return true
   const hasIm = person.imClients != undefined
   if (hasIm) return true
@@ -46,38 +47,54 @@ function contactFilter(person: GoogleAppsScript.People.Schema.Person): boolean {
  * @returns A string with the name of the person, IM usernames to delete, phones
  * to delete, urls to delete and emails to delete
  */
-function personChangesToString(person: GoogleAppsScript.People.Schema.Person): string {
+function personChangesToString(
+  person: GoogleAppsScript.People.Schema.Person
+): string {
   let phonesToDelete = getPhonesToDelete(person.phoneNumbers)
-  phonesToDelete = phonesToDelete != undefined && phonesToDelete.length > 0 ? phonesToDelete : undefined
+  phonesToDelete = (phonesToDelete != undefined && phonesToDelete.length > 0) ?
+    phonesToDelete : undefined
   let urlsToDelete = person.urls?.filter(isUrlToDelete).map((url) => url.value)
-  urlsToDelete = urlsToDelete != undefined && urlsToDelete.length > 0 ? urlsToDelete : undefined
+  urlsToDelete = (urlsToDelete != undefined && urlsToDelete.length > 0) ?
+    urlsToDelete : undefined
 
-  let emailsToDelete = person.emailAddresses?.filter(isEmailToDelete).map((email) => email.value)
-  emailsToDelete = emailsToDelete != undefined && emailsToDelete.length > 0 ? emailsToDelete : undefined
+  let emailsToDelete = person
+    .emailAddresses
+    ?.filter(isEmailToDelete)
+    .map((email) => email.value)
+  emailsToDelete = (emailsToDelete != undefined && emailsToDelete.length > 0) ?
+    emailsToDelete : undefined
   return [
     `${person.names?.at(0)?.displayName}`,
     person.imClients?.map((im) => `${im.protocol}: ${im.username}`).join(", "),
-    phonesToDelete != undefined ? `Phones to delete: ${phonesToDelete.join(", ")}` : undefined,
-    urlsToDelete != undefined ? `Urls to delete: ${urlsToDelete.join(", ")}` : undefined,
-    emailsToDelete != undefined ? `Emails to delete: ${emailsToDelete.join(", ")}` : undefined
+    phonesToDelete != undefined ?
+      `Phones to delete: ${phonesToDelete.join(", ")}` : undefined,
+    urlsToDelete != undefined ?
+      `Urls to delete: ${urlsToDelete.join(", ")}` : undefined,
+    emailsToDelete != undefined ?
+      `Emails to delete: ${emailsToDelete.join(", ")}` : undefined
   ].filter((str): str is string => !(str == null)).join("\n")
 }
 
 /**
- * Entry point to the main script, runs all the cleanups described in the readme.
+ * Entry point to the main script, runs all the cleanups described in the
+ * readme.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function runAllCleanups() {
   const contacts = getFilteredContacts(contactFilter)
   contacts.forEach((person) => {
-    console.log(`Removing the following details from ${personChangesToString(person)}`)
+    console.log(
+      `Removing the following details from ${personChangesToString(person)}`)
     person.imClients = undefined
     person.urls = person.urls?.filter((url) => !isUrlToDelete(url))
-    person.emailAddresses = person.emailAddresses?.filter((email) => !isEmailToDelete(email))
+    person.emailAddresses =
+      person.emailAddresses?.filter((email) => !isEmailToDelete(email))
     const phonesToDelete = getPhonesToDelete(person.phoneNumbers)
     person.phoneNumbers = person.phoneNumbers
       ?.filter((phone) =>
-        phonesToDelete?.find((phoneToDelete) => phoneToDelete == getSimplifiedPhoneNumber(phone)) == undefined
+        phonesToDelete?.find((phoneToDelete) =>
+          phoneToDelete == getSimplifiedPhoneNumber(phone)
+        ) == undefined
       )
 
     People.People!.updateContact(

@@ -26,11 +26,13 @@
  * Run on corp accounts at your own risk.
  *
  * @param personFields Fields to request, see https://developers.google.com/people/api/rest/v1/people.connections/list
- * @returns All contacts in your google account as Google Apps Script Person objects, with only the `personFields` filled.
+ * @returns All contacts in your google account as Google Apps Script Person
+ * objects, with only the `personFields` filled.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getAllContacts(
-  personFields: string[] = ['names', 'imClients', 'urls', 'phoneNumbers', 'emailAddresses']
+  personFields: string[] =
+    ['names', 'imClients', 'urls', 'phoneNumbers', 'emailAddresses']
 ): GoogleAppsScript.People.Schema.Person[] {
   let nextPageToken: string | undefined = undefined
   let allPeople: GoogleAppsScript.People.Schema.Person[] = []
@@ -52,18 +54,22 @@ function getAllContacts(
 
 /**
  * Gets all the contacts from the Google People API, 500 at a time, and
- * aggregates them in a single in-memory array and then filters them by the filterFn criteria.
+ * aggregates them in a single in-memory array and then filters them by the
+ * filterFn criteria.
  *
  * Run on corp accounts at your own risk.
  *
- * @param filterFn a function that takes a Person object and returns true if the object is to be kept in the array.
+ * @param filterFn a function that takes a Person object and returns true if the
+ * object is to be kept in the array.
  * @param personFields Fields to request, see https://developers.google.com/people/api/rest/v1/people.connections/list
- * @returns All contacts in your google account that pass the filterFn as Google Apps Script Person objects, with only the `personFields` filled.
+ * @returns All contacts in your google account that pass the filterFn as Google
+ * Apps Script Person objects, with only the `personFields` filled.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getFilteredContacts(
   filterFn: (person: GoogleAppsScript.People.Schema.Person) => boolean,
-  personFields: string[] = ['names', 'imClients', 'urls', 'phoneNumbers', 'emailAddresses']
+  personFields: string[] =
+    ['names', 'imClients', 'urls', 'phoneNumbers', 'emailAddresses']
 ): GoogleAppsScript.People.Schema.Person[] {
   const filteredContacts = getAllContacts(personFields)
     .filter(filterFn)

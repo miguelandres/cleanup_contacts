@@ -25,7 +25,9 @@
  * @returns true if the email should be deleted
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function isEmailToDelete(email: GoogleAppsScript.People.Schema.EmailAddress): boolean {
+function isEmailToDelete(
+  email: GoogleAppsScript.People.Schema.EmailAddress
+): boolean {
   return email.value == undefined ||
     email.value?.length == 0 ||
     email.value?.endsWith("@google.com") ||
@@ -43,7 +45,12 @@ function generateReportOfEmailsToDelete() {
   )
 
   filteredContacts.forEach((person) => {
-    const emailsToDelete = person.emailAddresses?.filter(isEmailToDelete).map((email) => email.value!)
-    console.log(`${person.names?.at(0)?.displayName} has the following emails to delete: ${emailsToDelete}`)
+    const emailsToDelete = person.emailAddresses
+      ?.filter(isEmailToDelete)
+      .map((email) => email.value!)
+    const name = person.names?.at(0)?.displayName
+    console.log(
+      `${name} has the following emails to delete: ${emailsToDelete}`
+    )
   })
 }

@@ -16,7 +16,8 @@
     "project": "./tsconfig.json"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "@stylistic"
   ],
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": [
@@ -24,6 +25,15 @@
       {
         "allowString": false,
         "allowNumber": false
+      }
+    ],
+    "@stylistic/max-len": [
+      2,
+      {
+        "code": 80,
+        "tabWidth": 2,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true
       }
     ]
   }
