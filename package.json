@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Miguel Barreto",
   "license": "ISC",
   "dependencies": {
     "@types/google-apps-script": "^1.0.79",
