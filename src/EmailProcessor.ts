@@ -19,6 +19,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ * Function to decide whether an email should be deleted
+ * @param email Google Apps Script email instance
+ * @returns true if the email should be deleted
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function isEmailToDelete(email: GoogleAppsScript.People.Schema.EmailAddress): boolean {
   return email.value == undefined ||
@@ -27,9 +32,13 @@ function isEmailToDelete(email: GoogleAppsScript.People.Schema.EmailAddress): bo
     email.value?.endsWith("@uniandes.edu.co")
 }
 
+/**
+ * Debugging function that shows all of the emails to delete for everyone.
+ * Does not make any changes
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function generateReportOfEmailsToDelete() {
-  const filteredContacts = getAllFilteredContacts((person) =>
+  const filteredContacts = getFilteredContacts((person) =>
     (person.emailAddresses?.filter(isEmailToDelete) ?? []).length > 0
   )
 

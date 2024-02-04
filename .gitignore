@@ -1,6 +1,6 @@
 *.DS_Store
 # Clasp configuration
-.clasp.json
+/.clasp.json
 
 # Logs
 logs
