@@ -19,6 +19,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ * Returns true if the URL should be deleted from the contact.
+ * @param url Url object from Google Apps Script
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function isUrlToDelete(url: GoogleAppsScript.People.Schema.Url): boolean {
   return url.value == undefined ||
