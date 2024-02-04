@@ -19,6 +19,13 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ * Function to evaluate whether an individual person needs to be edited or not.
+ *
+ * This is passed to @function getFilteredContacts.
+ * @param person Person to decide whether to filter or not
+ * @returns True if the person will be filtered (kept in the filtered list)
+ */
 function contactFilter(person: GoogleAppsScript.People.Schema.Person): boolean {
   const hasUrlToDelete = person.urls?.find(isUrlToDelete) != undefined
   if (hasUrlToDelete) return true
@@ -32,8 +39,14 @@ function contactFilter(person: GoogleAppsScript.People.Schema.Person): boolean {
   return hasPhonesToDelete
 }
 
-
-function personDetailsToString(person: GoogleAppsScript.People.Schema.Person): string {
+/**
+ * Debugging function that returns a debug string that represnts the changes
+ * that a particular person will have when the script runs
+ * @param person Person to be edited
+ * @returns A string with the name of the person, IM usernames to delete, phones
+ * to delete, urls to delete and emails to delete
+ */
+function personChangesToString(person: GoogleAppsScript.People.Schema.Person): string {
   let phonesToDelete = getPhonesToDelete(person.phoneNumbers)
   phonesToDelete = phonesToDelete != undefined && phonesToDelete.length > 0 ? phonesToDelete : undefined
   let urlsToDelete = person.urls?.filter(isUrlToDelete).map((url) => url.value)
@@ -50,18 +63,21 @@ function personDetailsToString(person: GoogleAppsScript.People.Schema.Person): s
   ].filter((str): str is string => !(str == null)).join("\n")
 }
 
+/**
+ * Entry point to the main script, runs all the cleanups described in the readme.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function runAllCleanups() {
-  const contacts = getAllFilteredContacts(contactFilter)
+  const contacts = getFilteredContacts(contactFilter)
   contacts.forEach((person) => {
-    console.log(`Removing the following details from ${personDetailsToString(person)}`)
+    console.log(`Removing the following details from ${personChangesToString(person)}`)
     person.imClients = undefined
     person.urls = person.urls?.filter((url) => !isUrlToDelete(url))
     person.emailAddresses = person.emailAddresses?.filter((email) => !isEmailToDelete(email))
     const phonesToDelete = getPhonesToDelete(person.phoneNumbers)
     person.phoneNumbers = person.phoneNumbers
       ?.filter((phone) =>
-        phonesToDelete?.find((phoneToDelete) => phoneToDelete == getCanonicalPhone(phone)) == undefined
+        phonesToDelete?.find((phoneToDelete) => phoneToDelete == getSimplifiedPhoneNumber(phone)) == undefined
       )
 
     People.People!.updateContact(
