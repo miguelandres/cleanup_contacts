@@ -21,7 +21,10 @@
 import { getFilteredContacts } from './PeopleQueries.js';
 import { isEmailToDelete } from './EmailProcessor.js';
 import { contactFilter, personChangesToString } from './ContactCleaner.js';
-import { getPhonesToDelete, getSimplifiedPhoneNumber } from './PhoneProcessor.js';
+import {
+  getPhonesToDelete,
+  getSimplifiedPhoneNumber,
+} from './PhoneProcessor.js';
 import { isUrlToDelete } from './UrlProcessor.js';
 /**
  * Entry point to the main script, runs all the cleanups described in the
