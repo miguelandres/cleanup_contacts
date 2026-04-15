@@ -23,9 +23,13 @@
  * Returns true if the URL should be deleted from the contact.
  * @param url Url object from Google Apps Script
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function isUrlToDelete(url: GoogleAppsScript.People.Schema.Url): boolean {
-  return url.value == undefined ||
+
+export function isUrlToDelete(
+  url: GoogleAppsScript.People.Schema.Url
+): boolean {
+  return (
+    url.value == undefined ||
     url.value?.length == 0 ||
-    url.value?.indexOf("google.com/profiles/") != -1
+    url.value?.indexOf('google.com/profiles/') != -1
+  );
 }

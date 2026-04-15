@@ -1,15 +1,30 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
     "lib": [
-      "esnext"
+      "ES2022",
+      "dom"
     ],
-    "experimentalDecorators": true,
-    "strictNullChecks": true,
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "types": [
+      "google-apps-script",
+      "jest",
+      "node"
+    ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*",
+    "test/**/*",
+    "rollup.config.mjs"
   ]
 }

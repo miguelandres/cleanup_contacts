@@ -1,7 +1,4 @@
 *.DS_Store
-# Clasp configuration
-/.clasp.json
-
 # Logs
 logs
 *.log
@@ -29,3 +26,4 @@ coverage
 node_modules
 tmp
 .clasprc.json
+.clasp.json
