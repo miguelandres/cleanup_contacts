@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Miguel Barreto and others
+// Copyright (c) 2025 Miguel Barreto and others
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -18,18 +18,3 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-/**
- * Returns true if the URL should be deleted from the contact.
- * @param url Url object from Google Apps Script
- */
-
-export function isUrlToDelete(
-  url: GoogleAppsScript.People.Schema.Url
-): boolean {
-  return (
-    url.value == undefined ||
-    url.value?.length == 0 ||
-    url.value?.indexOf('google.com/profiles/') != -1
-  );
-}

@@ -1,12 +1,19 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
+    "rootDir": "src",
+    "outDir": "dist",
     "lib": [
-      "esnext"
+      "ES2022"
+    ],
+    "types": [
+      "google-apps-script"
     ],
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true
   },
   "include": [
     "src/**/*.ts",

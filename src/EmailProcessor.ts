@@ -19,38 +19,41 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { getFilteredContacts } from './PeopleQueries.js';
+
 /**
  * Function to decide whether an email should be deleted
  * @param email Google Apps Script email instance
  * @returns true if the email should be deleted
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function isEmailToDelete(
+export function isEmailToDelete(
   email: GoogleAppsScript.People.Schema.EmailAddress
 ): boolean {
-  return email.value == undefined ||
+  return (
+    email.value == undefined ||
     email.value?.length == 0 ||
-    email.value?.endsWith("@google.com") ||
-    email.value?.endsWith("@uniandes.edu.co")
+    email.value?.endsWith('@google.com') === true ||
+    email.value?.endsWith('@uniandes.edu.co') === true
+  );
 }
 
 /**
  * Debugging function that shows all of the emails to delete for everyone.
  * Does not make any changes
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function generateReportOfEmailsToDelete() {
-  const filteredContacts = getFilteredContacts((person) =>
-    (person.emailAddresses?.filter(isEmailToDelete) ?? []).length > 0
-  )
 
-  filteredContacts.forEach((person) => {
+export function generateReportOfEmailsToDelete() {
+  const filteredContacts = getFilteredContacts(
+    person => (person.emailAddresses?.filter(isEmailToDelete) ?? []).length > 0
+  );
+
+  filteredContacts.forEach(person => {
     const emailsToDelete = person.emailAddresses
       ?.filter(isEmailToDelete)
-      .map((email) => email.value!)
-    const name = person.names?.at(0)?.displayName
+      .map(email => email.value!);
+    const name = person.names?.at(0)?.displayName;
     console.log(
       `${name} has the following emails to delete: ${emailsToDelete}`
-    )
-  })
+    );
+  });
 }

@@ -15,35 +15,17 @@ do phone number migrations.
 Make sure you [enable the Google Apps Script API for your Google Account](https://script.google.com/home/usersettings).
 
 ```sh
-# Install clasp
-npm install -g @google/clasp
+# Install dependencies
+npm install
 
-# Login into your google account with clasp
-clasp login
+# Run linting
+npm run lint
 
-# Install autocomplete for Google Apps Script
-npm install --save @types/google-apps-script
+# Run type check (build)
+npm run build
 
-# Add all the ESLint stuff
-npm install @typescript-eslint/eslint-plugin@latest --save-dev
-npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin
-npm install --save-dev eslint-config-prettier
-npm i -D @stylistic/eslint-plugin
-npm install eslint
-```
-
-### Setting up your own Google script
-
-For anyone other than the original author, please remove the `.clasp.json` file
-and initialize it again. This clasp configuration is set to my own instance
-of the script on my Google account to which you likely have no access.
-
-Therefore run the following commands before doing anything
-
-```sh
-rm .clasp.json
-# Create a new standalone script in your account
-clasp create
+# Push changes to Google Apps Script
+npm deploy:prod
 ```
 
 ### What the script does right now
@@ -123,16 +105,38 @@ a map on each person object returned by `getFilteredContacts` and calls
 
 Modifying the logic that change the person objects will apply those changes.
 
-## How to deploy and run
+### Setting up your own Google script
 
-> [!CAUTION]
-> If you make changes to this script I cannot recommend enough either keeping a
-> backup of your contacts OR running it first in a burner account with a copy
-> of your contacts and evaluate. You risk data loss otherwise.
+For anyone other than the original author, please remove the `.clasp-dev.json`
+and `.clasp-prod.json` files and initialize them again using clasp create.
 
-When you're done with your local edits, use `clasp push` to push them to Google.
+This clasp configuration is set to my own instance of the script on my Google
+account to which you likely have no access.
 
-You can then use `clasp open` to open the script on your browser and run it from
-there.
+Therefore run the following commands before doing anything
 
-Alternatively you can use `clasp run` but I haven't tried that.
+```sh
+rm .clasp.json
+# Create a new standalone script in your account
+clasp create
+```
+
+## Run Lint
+
+```sh
+npm run lint
+```
+
+## Run Tests
+
+```sh
+npm run test
+```
+
+## Deploy
+
+```sh
+npm run deploy
+
+npm run deploy:prod
+```

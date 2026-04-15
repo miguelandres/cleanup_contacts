@@ -29,27 +29,29 @@
  * @returns All contacts in your google account as Google Apps Script Person
  * objects, with only the `personFields` filled.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getAllContacts(
-  personFields: string[] =
-    ['names', 'imClients', 'urls', 'phoneNumbers', 'emailAddresses']
+export function getAllContacts(
+  personFields: string[] = [
+    'names',
+    'imClients',
+    'urls',
+    'phoneNumbers',
+    'emailAddresses',
+  ]
 ): GoogleAppsScript.People.Schema.Person[] {
-  let nextPageToken: string | undefined = undefined
-  let allPeople: GoogleAppsScript.People.Schema.Person[] = []
+  let nextPageToken: string | undefined = undefined;
+  let allPeople: GoogleAppsScript.People.Schema.Person[] = [];
   do {
-    const query = {
+    const query: object = {
       pageToken: nextPageToken,
       pageSize: 500,
-      personFields: personFields.join(",")
-    }
-    const response = People.People!.Connections!.list(
-      'people/me',
-      query)
-    nextPageToken = response.nextPageToken
-    allPeople = allPeople.concat(response.connections!)
-  } while (nextPageToken != undefined)
-  console.log(`found ${allPeople.length} contacts`)
-  return allPeople
+      personFields: personFields.join(','),
+    };
+    const response = People!.People!.Connections!.list('people/me', query);
+    nextPageToken = response.nextPageToken;
+    allPeople = allPeople.concat(response.connections!);
+  } while (nextPageToken != undefined);
+  console.log(`found ${allPeople.length} contacts`);
+  return allPeople;
 }
 
 /**
@@ -65,14 +67,18 @@ function getAllContacts(
  * @returns All contacts in your google account that pass the filterFn as Google
  * Apps Script Person objects, with only the `personFields` filled.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getFilteredContacts(
+
+export function getFilteredContacts(
   filterFn: (person: GoogleAppsScript.People.Schema.Person) => boolean,
-  personFields: string[] =
-    ['names', 'imClients', 'urls', 'phoneNumbers', 'emailAddresses']
+  personFields: string[] = [
+    'names',
+    'imClients',
+    'urls',
+    'phoneNumbers',
+    'emailAddresses',
+  ]
 ): GoogleAppsScript.People.Schema.Person[] {
-  const filteredContacts = getAllContacts(personFields)
-    .filter(filterFn)
-  console.log(`found ${filteredContacts.length} people that pass the filter`)
-  return filteredContacts
+  const filteredContacts = getAllContacts(personFields).filter(filterFn);
+  console.log(`found ${filteredContacts.length} people that pass the filter`);
+  return filteredContacts;
 }

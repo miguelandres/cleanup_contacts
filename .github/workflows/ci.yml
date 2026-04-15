@@ -1,0 +1,47 @@
+name: Build and test
+permissions:
+  contents: read
+
+# Controls when the workflow should run
+on:
+  # Triggers the workflow on push events for main and master branches
+  push:
+    branches: [main, master]
+
+  # Triggers the workflow on pull request events for main and master branches
+  pull_request:
+    branches: [main, master]
+
+# A workflow run is made up of one or more jobs
+jobs:
+  build-and-test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Sets up Node.js environment
+      - name: Set up Node.js 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24" # Use a stable LTS version
+          cache: "npm" # Caches npm dependencies to speed up subsequent runs
+
+      # Installs project dependencies using npm ci (clean install for CI)
+      - name: Install Dependencies
+        run: npm ci
+
+      # Run linting to check code style and configuration validity
+      - name: Run Lint
+        run: npm run lint
+
+      # Run tests (If tests fail, the workflow stops here)
+      # This repo actually doesn't have any tests, so this is a no op.
+      - name: Run Tests
+        run: npm run test
+
+      # Run the build command (If the build fails, the workflow stops here)
+      - name: Run Build
+        run: npm run build
