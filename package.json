@@ -31,7 +31,7 @@
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "gts": "^7.0.0",
     "jest": "^30.3.0",
     "license-check-and-add": "^4.0.5",
