@@ -39,7 +39,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import cleanup from 'rollup-plugin-cleanup';
-import iife from 'rollup-plugin-iife';
 import license from 'rollup-plugin-license';
 import prettier from 'rollup-plugin-prettier';
 import typescript from 'rollup-plugin-typescript2';
