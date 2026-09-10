@@ -23,7 +23,7 @@
     "@google/clasp": "^3.4.0",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "@types/google-apps-script": "^2.0.12",
+    "@types/google-apps-script": "^2.0.13",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.2.0",
     "eslint": "^10.10.0",
